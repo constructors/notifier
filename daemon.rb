@@ -8,6 +8,8 @@ require 'mkfifo'
 require 'daemons'
 require File.expand_path('config.rb', File.dirname(__FILE__))
 
+MYNAME = 'notifier-daemon'
+
 File.unlink(FIFO) rescue nil
 begin
   File.mkfifo(FIFO)
@@ -17,12 +19,12 @@ rescue
   exit 1
 end
 
-Daemons.run_proc("notifier-daemon") do
+Daemons.run_proc(MYNAME) do
   client = Jabber::Client.new(JID)
   client.connect
   client.auth(PASS)
   muc = Jabber::MUC::SimpleMUCClient.new(client)
-  muc.join(ROOM + '/hekker')
+  muc.join(ROOM + '/' + MYNAME)
 
   loop do
     fifo = File.open(FIFO)
