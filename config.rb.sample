@@ -1,0 +1,4 @@
+JID = 'user@im.example.org'
+PASS = 'supersecret'
+ROOM = 'nicepeople@conference.im.example.org'
+FIFO = '/tmp/notify-fifo'
